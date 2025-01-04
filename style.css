@@ -1,9 +1,29 @@
 body {
     margin: 0;
     overflow: hidden;
+    font-family: Arial, sans-serif;
 }
 
-#simulationCanvas {
-    display: block;
-    background-color: #f0f0f0;
+#menu {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+button {
+    margin: 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
 }
