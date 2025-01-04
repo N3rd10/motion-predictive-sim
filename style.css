@@ -23,6 +23,23 @@ button {
     color: white;
     cursor: pointer;
 }
+#propertyPopup {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+#propertyPopup h3 {
+    margin: 0;
+}
+
+#propertyPopup label {
+    display: block;
+    margin: 5px 0;
+}
 
 button:hover {
     background-color: #0056b3;
