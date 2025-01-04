@@ -30,7 +30,7 @@ const mouseConstraint = MouseConstraint.create(engine, {
 });
 World.add(world, mouseConstraint);
 
-// Add some bodies
+// Add ground
 const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 10, window.innerWidth, 20, { isStatic: true });
 World.add(world, ground);
 
@@ -40,10 +40,32 @@ function createCircle(x, y) {
     World.add(world, circle);
 }
 
-// Event listener for mouse clicks
-canvas.addEventListener('click', (event) => {
-    createCircle(event.clientX, event.clientY);
+// Function to create a new rectangle
+function createRectangle(x, y) {
+    const rectangle = Bodies.rectangle(x, y, 40, 20);
+    World.add(world, rectangle);
+}
+
+// Function to clear all bodies
+function clearAll() {
+    World.clear(world);
+    World.add(world, ground); // Re-add the ground
+}
+
+// Event listeners for menu buttons
+document.getElementById('addCircle').addEventListener('click', () => {
+    canvas.addEventListener('click', (event) => {
+        createCircle(event.clientX, event.clientY);
+    }, { once: true }); // Only add one circle per click
 });
+
+document.getElementById('addRectangle').addEventListener('click', () => {
+    canvas.addEventListener('click', (event) => {
+        createRectangle(event.clientX, event.clientY);
+    }, { once: true }); // Only add one rectangle per click
+});
+
+document.getElementById('clear').addEventListener('click', clearAll);
 
 // Run the engine and renderer
 Engine.run(engine);
