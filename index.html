@@ -13,6 +13,19 @@
         <button id="move">Move</button>
         <button id="clear">Clear All</button>
     </div>
+    
+    <div id="propertyPopup" style="display: none;">
+        <h3>Object Properties</h3>
+        <label for="color">Color:</label>
+        <input type="color" id="color" value="#ffffff">
+        <br>
+        <label for="size">Size:</label>
+        <input type="number" id="size" min="10" value="20">
+        <br>
+        <button id="updateProperties">Update</button>
+        <button id="closePopup">Close</button>
+    </div>
+
     <canvas id="simulationCanvas"></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
     <script src="script.js"></script>
