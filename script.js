@@ -1,5 +1,5 @@
 // Import Matter.js
-const { Engine, Render, World, Bodies, Mouse, MouseConstraint } = Matter;
+const { Engine, Render, World, Bodies, Mouse, MouseConstraint, Body } = Matter;
 
 // Create an engine
 const engine = Engine.create();
@@ -52,6 +52,19 @@ function clearAll() {
     World.add(world, ground); // Re-add the ground
 }
 
+// Function to enable moving shapes
+let isMoving = false;
+
+function enableMove() {
+    isMoving = true;
+    canvas.style.cursor = 'move'; // Change cursor to indicate moving mode
+}
+
+function disableMove() {
+    isMoving = false;
+    canvas.style.cursor = 'default'; // Reset cursor
+}
+
 // Event listeners for menu buttons
 document.getElementById('addCircle').addEventListener('click', () => {
     canvas.addEventListener('click', (event) => {
@@ -65,7 +78,49 @@ document.getElementById('addRectangle').addEventListener('click', () => {
     }, { once: true }); // Only add one rectangle per click
 });
 
+document.getElementById('move').addEventListener('click', () => {
+    if (isMoving) {
+        disableMove();
+    } else {
+        enableMove();
+    }
+});
+
 document.getElementById('clear').addEventListener('click', clearAll);
+
+// Mouse event listeners for moving shapes
+canvas.addEventListener('mousedown', (event) => {
+    if (isMoving) {
+        const mousePosition = { x: event.clientX, y: event.clientY };
+        const bodies = Matter.Composite.allBodies(world);
+        const clickedBody = bodies.find(body => Matter.Bounds.contains(body.bounds, mousePosition));
+
+        if (clickedBody) {
+            // Start dragging the body
+            Body.setStatic(clickedBody, false); // Make it non-static
+            Matter.Body.setPosition(clickedBody, mousePosition);
+            canvas.addEventListener('mousemove', onMouseMove);
+            canvas.addEventListener('mouseup', onMouseUp);
+        }
+    }
+});
+
+function onMouseMove(event) {
+    if (isMoving) {
+        const mousePosition = { x: event.clientX, y: event.clientY };
+        const bodies = Matter.Composite.allBodies(world);
+        const clickedBody = bodies.find(body => Matter.Bounds.contains(body.bounds, mousePosition));
+
+        if (clickedBody) {
+            Matter.Body.setPosition(clickedBody, mousePosition);
+        }
+    }
+}
+
+function onMouseUp() {
+    canvas.removeEventListener('mousemove', onMouseMove);
+    canvas.removeEventListener('mouseup', onMouseUp);
+}
 
 // Run the engine and renderer
 Engine.run(engine);
